@@ -336,7 +336,7 @@ public class JenkinsDockerDemoApplication {
                     </div>
 
                     <div class="system-status">
-                        ● System Operational
+                        ● System is Operational
                     </div>
 
                 </div>
