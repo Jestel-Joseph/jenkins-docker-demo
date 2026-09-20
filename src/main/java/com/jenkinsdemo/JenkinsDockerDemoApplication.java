@@ -20,9 +20,12 @@ public class JenkinsDockerDemoApplication {
             <html>
             <head>
                 <title>CloudOps Dashboard</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1">
+
+                <meta name="viewport"
+                      content="width=device-width, initial-scale=1">
 
                 <style>
+
                     * {
                         box-sizing: border-box;
                         margin: 0;
@@ -36,12 +39,13 @@ public class JenkinsDockerDemoApplication {
                     }
 
                     .header {
+                        height: 70px;
                         background: #111827;
                         color: white;
-                        padding: 20px 35px;
                         display: flex;
-                        justify-content: space-between;
                         align-items: center;
+                        justify-content: space-between;
+                        padding: 0 30px;
                     }
 
                     .logo {
@@ -49,7 +53,7 @@ public class JenkinsDockerDemoApplication {
                         font-weight: bold;
                     }
 
-                    .status {
+                    .system-status {
                         color: #22c55e;
                         font-size: 14px;
                     }
@@ -60,21 +64,28 @@ public class JenkinsDockerDemoApplication {
                     }
 
                     .sidebar {
-                        width: 220px;
+                        width: 230px;
                         background: #1f2937;
-                        color: white;
-                        padding: 25px 15px;
+                        padding: 20px 12px;
                     }
 
-                    .sidebar div {
+                    .menu-item {
+                        color: #d1d5db;
                         padding: 14px;
-                        margin-bottom: 8px;
+                        margin-bottom: 6px;
                         border-radius: 8px;
                         cursor: pointer;
+                        transition: 0.2s;
                     }
 
-                    .sidebar div:hover {
+                    .menu-item:hover {
                         background: #374151;
+                        color: white;
+                    }
+
+                    .menu-item.active {
+                        background: #2563eb;
+                        color: white;
                     }
 
                     .content {
@@ -82,7 +93,16 @@ public class JenkinsDockerDemoApplication {
                         padding: 35px;
                     }
 
+                    .page {
+                        display: none;
+                    }
+
+                    .page.active {
+                        display: block;
+                    }
+
                     h1 {
+                        font-size: 28px;
                         margin-bottom: 8px;
                     }
 
@@ -93,22 +113,24 @@ public class JenkinsDockerDemoApplication {
 
                     .cards {
                         display: grid;
-                        grid-template-columns: repeat(4, 1fr);
+                        grid-template-columns:
+                            repeat(4, 1fr);
                         gap: 20px;
-                        margin-bottom: 30px;
+                        margin-bottom: 25px;
                     }
 
                     .card {
                         background: white;
                         padding: 22px;
                         border-radius: 12px;
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                        box-shadow:
+                            0 2px 8px rgba(0,0,0,0.08);
                     }
 
                     .card-title {
                         color: #6b7280;
-                        font-size: 14px;
-                        margin-bottom: 12px;
+                        font-size: 13px;
+                        margin-bottom: 10px;
                     }
 
                     .number {
@@ -116,15 +138,15 @@ public class JenkinsDockerDemoApplication {
                         font-weight: bold;
                     }
 
-                    .online {
+                    .green {
                         color: #16a34a;
                     }
 
-                    .warning {
+                    .orange {
                         color: #d97706;
                     }
 
-                    .offline {
+                    .red {
                         color: #dc2626;
                     }
 
@@ -133,7 +155,8 @@ public class JenkinsDockerDemoApplication {
                         padding: 25px;
                         border-radius: 12px;
                         margin-bottom: 25px;
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                        box-shadow:
+                            0 2px 8px rgba(0,0,0,0.08);
                     }
 
                     .section h2 {
@@ -143,8 +166,10 @@ public class JenkinsDockerDemoApplication {
                     .server {
                         display: flex;
                         justify-content: space-between;
-                        padding: 15px 0;
-                        border-bottom: 1px solid #e5e7eb;
+                        align-items: center;
+                        padding: 17px 0;
+                        border-bottom:
+                            1px solid #e5e7eb;
                     }
 
                     .server:last-child {
@@ -152,7 +177,7 @@ public class JenkinsDockerDemoApplication {
                     }
 
                     .badge {
-                        padding: 5px 10px;
+                        padding: 6px 12px;
                         border-radius: 20px;
                         font-size: 12px;
                         background: #dcfce7;
@@ -164,143 +189,498 @@ public class JenkinsDockerDemoApplication {
                         color: #92400e;
                     }
 
+                    .offline-badge {
+                        background: #fee2e2;
+                        color: #991b1b;
+                    }
+
+                    .progress-container {
+                        margin-top: 15px;
+                    }
+
+                    .progress-label {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 7px;
+                        font-size: 14px;
+                    }
+
                     .progress {
-                        height: 8px;
+                        height: 10px;
                         background: #e5e7eb;
                         border-radius: 10px;
-                        margin-top: 10px;
+                        overflow: hidden;
                     }
 
                     .progress-bar {
                         height: 100%;
+                        border-radius: 10px;
+                    }
+
+                    .cpu {
                         width: 72%;
                         background: #2563eb;
-                        border-radius: 10px;
+                    }
+
+                    .memory {
+                        width: 51%;
+                        background: #16a34a;
+                    }
+
+                    .storage {
+                        width: 84%;
+                        background: #d97706;
                     }
 
                     .deployment {
                         display: flex;
                         justify-content: space-between;
-                        padding: 14px 0;
-                        border-bottom: 1px solid #e5e7eb;
+                        padding: 16px 0;
+                        border-bottom:
+                            1px solid #e5e7eb;
+                    }
+
+                    .deployment:last-child {
+                        border-bottom: none;
+                    }
+
+                    .success {
+                        color: #16a34a;
+                        font-weight: bold;
+                    }
+
+                    .log {
+                        padding: 13px;
+                        margin-bottom: 8px;
+                        background: #111827;
+                        color: #d1d5db;
+                        border-radius: 6px;
+                        font-family: monospace;
+                        font-size: 13px;
+                    }
+
+                    .refresh-btn {
+                        margin-top: 20px;
+                        padding: 10px 18px;
+                        background: #2563eb;
+                        color: white;
+                        border: none;
+                        border-radius: 7px;
+                        cursor: pointer;
+                    }
+
+                    .refresh-btn:hover {
+                        background: #1d4ed8;
                     }
 
                     @media (max-width: 900px) {
+
                         .cards {
-                            grid-template-columns: repeat(2, 1fr);
+                            grid-template-columns:
+                                repeat(2, 1fr);
                         }
+
+                        .sidebar {
+                            width: 190px;
+                        }
+                    }
+
+                    @media (max-width: 650px) {
 
                         .sidebar {
                             display: none;
                         }
+
+                        .content {
+                            padding: 20px;
+                        }
+
+                        .cards {
+                            grid-template-columns: 1fr;
+                        }
                     }
+
                 </style>
             </head>
 
             <body>
 
                 <div class="header">
-                    <div class="logo">☁ CloudOps</div>
-                    <div class="status">● System Operational</div>
+
+                    <div class="logo">
+                        ☁ CloudOps
+                    </div>
+
+                    <div class="system-status">
+                        ● System Operational
+                    </div>
+
                 </div>
 
                 <div class="layout">
 
                     <div class="sidebar">
-                        <div>📊 Dashboard</div>
-                        <div>🖥 Servers</div>
-                        <div>🚀 Deployments</div>
-                        <div>📈 Monitoring</div>
-                        <div>📋 Logs</div>
-                        <div>⚙ Settings</div>
+
+                        <div class="menu-item active"
+                             onclick="showPage('dashboard', this)">
+                            📊 Dashboard
+                        </div>
+
+                        <div class="menu-item"
+                             onclick="showPage('servers', this)">
+                            🖥 Servers
+                        </div>
+
+                        <div class="menu-item"
+                             onclick="showPage('deployments', this)">
+                            🚀 Deployments
+                        </div>
+
+                        <div class="menu-item"
+                             onclick="showPage('monitoring', this)">
+                            📈 Monitoring
+                        </div>
+
+                        <div class="menu-item"
+                             onclick="showPage('logs', this)">
+                            📋 Logs
+                        </div>
+
                     </div>
 
                     <div class="content">
 
-                        <h1>Infrastructure Dashboard</h1>
-                        <p class="subtitle">
-                            Monitor your applications and infrastructure
-                        </p>
+                        <!-- DASHBOARD -->
 
-                        <div class="cards">
+                        <div id="dashboard"
+                             class="page active">
 
-                            <div class="card">
-                                <div class="card-title">SERVERS ONLINE</div>
-                                <div class="number online">12</div>
+                            <h1>
+                                Infrastructure Dashboard
+                            </h1>
+
+                            <p class="subtitle">
+                                Monitor your cloud infrastructure
+                                and application deployments.
+                            </p>
+
+                            <div class="cards">
+
+                                <div class="card">
+                                    <div class="card-title">
+                                        SERVERS ONLINE
+                                    </div>
+
+                                    <div class="number green">
+                                        12
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-title">
+                                        WARNINGS
+                                    </div>
+
+                                    <div class="number orange">
+                                        2
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-title">
+                                        OFFLINE
+                                    </div>
+
+                                    <div class="number red">
+                                        1
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-title">
+                                        DEPLOYMENTS
+                                    </div>
+
+                                    <div class="number">
+                                        48
+                                    </div>
+                                </div>
+
                             </div>
 
-                            <div class="card">
-                                <div class="card-title">WARNINGS</div>
-                                <div class="number warning">2</div>
-                            </div>
+                            <div class="section">
 
-                            <div class="card">
-                                <div class="card-title">OFFLINE</div>
-                                <div class="number offline">1</div>
-                            </div>
+                                <h2>
+                                    🖥 Infrastructure Summary
+                                </h2>
 
-                            <div class="card">
-                                <div class="card-title">DEPLOYMENTS</div>
-                                <div class="number">48</div>
+                                <div class="server">
+                                    <span>
+                                        Production Environment
+                                    </span>
+
+                                    <span class="badge">
+                                        Healthy
+                                    </span>
+                                </div>
+
+                                <div class="server">
+                                    <span>
+                                        Database Environment
+                                    </span>
+
+                                    <span class="badge warning-badge">
+                                        Warning
+                                    </span>
+                                </div>
+
+                                <div class="server">
+                                    <span>
+                                        Backup Environment
+                                    </span>
+
+                                    <span class="badge">
+                                        Healthy
+                                    </span>
+                                </div>
+
                             </div>
 
                         </div>
 
-                        <div class="section">
 
-                            <h2>🖥 Server Status</h2>
+                        <!-- SERVERS -->
 
-                            <div class="server">
-                                <span>Production Server 01</span>
-                                <span class="badge">Online</span>
-                            </div>
+                        <div id="servers"
+                             class="page">
 
-                            <div class="server">
-                                <span>Production Server 02</span>
-                                <span class="badge">Online</span>
-                            </div>
+                            <h1>
+                                Server Infrastructure
+                            </h1>
 
-                            <div class="server">
-                                <span>Database Server</span>
-                                <span class="badge warning-badge">Warning</span>
-                            </div>
+                            <p class="subtitle">
+                                Monitor server availability.
+                            </p>
 
-                            <div class="server">
-                                <span>Backup Server</span>
-                                <span class="badge">Online</span>
+                            <div class="section">
+
+                                <div class="server">
+                                    <span>
+                                        🖥 Production-Web-01
+                                    </span>
+
+                                    <span class="badge">
+                                        ● Online
+                                    </span>
+                                </div>
+
+                                <div class="server">
+                                    <span>
+                                        🖥 Production-Web-02
+                                    </span>
+
+                                    <span class="badge">
+                                        ● Online
+                                    </span>
+                                </div>
+
+                                <div class="server">
+                                    <span>
+                                        🗄 Database-01
+                                    </span>
+
+                                    <span class="badge warning-badge">
+                                        ● Warning
+                                    </span>
+                                </div>
+
+                                <div class="server">
+                                    <span>
+                                        💾 Backup-Server
+                                    </span>
+
+                                    <span class="badge">
+                                        ● Online
+                                    </span>
+                                </div>
+
+                                <button class="refresh-btn"
+                                        onclick="alert('Server status refreshed!')">
+                                    ↻ Refresh Status
+                                </button>
+
                             </div>
 
                         </div>
 
-                        <div class="section">
 
-                            <h2>📈 CPU Usage</h2>
+                        <!-- DEPLOYMENTS -->
 
-                            <p>Current CPU utilization: <strong>72%</strong></p>
+                        <div id="deployments"
+                             class="page">
 
-                            <div class="progress">
-                                <div class="progress-bar"></div>
+                            <h1>
+                                Deployment History
+                            </h1>
+
+                            <p class="subtitle">
+                                Track application deployments.
+                            </p>
+
+                            <div class="section">
+
+                                <div class="deployment">
+
+                                    <span>
+                                        v1.4.2 — Production
+                                    </span>
+
+                                    <span class="success">
+                                        ✓ Successful
+                                    </span>
+
+                                </div>
+
+                                <div class="deployment">
+
+                                    <span>
+                                        v1.4.1 — Production
+                                    </span>
+
+                                    <span class="success">
+                                        ✓ Successful
+                                    </span>
+
+                                </div>
+
+                                <div class="deployment">
+
+                                    <span>
+                                        v1.4.0 — Staging
+                                    </span>
+
+                                    <span class="success">
+                                        ✓ Successful
+                                    </span>
+
+                                </div>
+
+                                <div class="deployment">
+
+                                    <span>
+                                        v1.3.9 — Production
+                                    </span>
+
+                                    <span class="success">
+                                        ✓ Successful
+                                    </span>
+
+                                </div>
+
                             </div>
 
                         </div>
 
-                        <div class="section">
 
-                            <h2>🚀 Recent Deployments</h2>
+                        <!-- MONITORING -->
 
-                            <div class="deployment">
-                                <span>v1.4.2 — Production</span>
-                                <span class="online">✓ Successful</span>
+                        <div id="monitoring"
+                             class="page">
+
+                            <h1>
+                                System Monitoring
+                            </h1>
+
+                            <p class="subtitle">
+                                Current infrastructure utilization.
+                            </p>
+
+                            <div class="section">
+
+                                <div class="progress-container">
+
+                                    <div class="progress-label">
+                                        <span>CPU Usage</span>
+                                        <strong>72%</strong>
+                                    </div>
+
+                                    <div class="progress">
+                                        <div class="progress-bar cpu">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="progress-container">
+
+                                    <div class="progress-label">
+                                        <span>Memory Usage</span>
+                                        <strong>51%</strong>
+                                    </div>
+
+                                    <div class="progress">
+                                        <div class="progress-bar memory">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="progress-container">
+
+                                    <div class="progress-label">
+                                        <span>Storage Usage</span>
+                                        <strong>84%</strong>
+                                    </div>
+
+                                    <div class="progress">
+                                        <div class="progress-bar storage">
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
 
-                            <div class="deployment">
-                                <span>v1.4.1 — Production</span>
-                                <span class="online">✓ Successful</span>
-                            </div>
+                        </div>
 
-                            <div class="deployment">
-                                <span>v1.4.0 — Staging</span>
-                                <span class="online">✓ Successful</span>
+
+                        <!-- LOGS -->
+
+                        <div id="logs"
+                             class="page">
+
+                            <h1>
+                                Application Logs
+                            </h1>
+
+                            <p class="subtitle">
+                                Recent system events.
+                            </p>
+
+                            <div class="section">
+
+                                <div class="log">
+                                    [INFO] Application started successfully
+                                </div>
+
+                                <div class="log">
+                                    [INFO] Docker container started
+                                </div>
+
+                                <div class="log">
+                                    [INFO] Jenkins deployment completed
+                                </div>
+
+                                <div class="log">
+                                    [INFO] Database connection established
+                                </div>
+
+                                <div class="log">
+                                    [INFO] Health check: OK
+                                </div>
+
                             </div>
 
                         </div>
@@ -308,6 +688,34 @@ public class JenkinsDockerDemoApplication {
                     </div>
 
                 </div>
+
+
+                <script>
+
+                    function showPage(pageId, element) {
+
+                        const pages =
+                            document.querySelectorAll('.page');
+
+                        pages.forEach(function(page) {
+                            page.classList.remove('active');
+                        });
+
+                        document
+                            .getElementById(pageId)
+                            .classList.add('active');
+
+                        const menuItems =
+                            document.querySelectorAll('.menu-item');
+
+                        menuItems.forEach(function(item) {
+                            item.classList.remove('active');
+                        });
+
+                        element.classList.add('active');
+                    }
+
+                </script>
 
             </body>
             </html>
