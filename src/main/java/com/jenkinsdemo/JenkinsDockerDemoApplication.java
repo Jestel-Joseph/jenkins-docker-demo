@@ -34,18 +34,26 @@ public class JenkinsDockerDemoApplication {
                     }
 
                     body {
-                        background: #f4f7fb;
-                        color: #1f2937;
+                        background-color: #0f172a;
+                        background-image: url('/123.jpg');
+                        background-size: cover;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        background-attachment: fixed;
+                        color: #e2e8f0;
                     }
 
                     .header {
                         height: 70px;
-                        background: #111827;
+                        background: rgba(17, 24, 39, 0.85);
+                        backdrop-filter: blur(12px);
+                        -webkit-backdrop-filter: blur(12px);
                         color: white;
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
                         padding: 0 30px;
+                        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
                     }
 
                     .logo {
@@ -65,8 +73,11 @@ public class JenkinsDockerDemoApplication {
 
                     .sidebar {
                         width: 230px;
-                        background: #1f2937;
+                        background: rgba(31, 41, 55, 0.75);
+                        backdrop-filter: blur(12px);
+                        -webkit-backdrop-filter: blur(12px);
                         padding: 20px 12px;
+                        border-right: 1px solid rgba(255, 255, 255, 0.08);
                     }
 
                     .menu-item {
@@ -79,7 +90,7 @@ public class JenkinsDockerDemoApplication {
                     }
 
                     .menu-item:hover {
-                        background: #374151;
+                        background: rgba(55, 65, 81, 0.7);
                         color: white;
                     }
 
@@ -104,63 +115,72 @@ public class JenkinsDockerDemoApplication {
                     h1 {
                         font-size: 28px;
                         margin-bottom: 8px;
+                        color: #f8fafc;
                     }
 
                     .subtitle {
-                        color: #6b7280;
+                        color: #94a3b8;
                         margin-bottom: 30px;
                     }
 
                     .cards {
                         display: grid;
-                        grid-template-columns:
-                            repeat(4, 1fr);
+                        grid-template-columns: repeat(4, 1fr);
                         gap: 20px;
                         margin-bottom: 25px;
                     }
 
                     .card {
-                        background: white;
+                        background: rgba(255, 255, 255, 0.12);
+                        backdrop-filter: blur(16px);
+                        -webkit-backdrop-filter: blur(16px);
+                        border: 1px solid rgba(255, 255, 255, 0.18);
                         padding: 22px;
-                        border-radius: 12px;
-                        box-shadow:
-                            0 2px 8px rgba(0,0,0,0.08);
+                        border-radius: 16px;
+                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+                        color: #f1f5f9;
                     }
 
                     .card-title {
-                        color: #6b7280;
+                        color: #94a3b8;
                         font-size: 13px;
                         margin-bottom: 10px;
+                        letter-spacing: 0.5px;
                     }
 
                     .number {
                         font-size: 30px;
                         font-weight: bold;
+                        color: #f8fafc;
                     }
 
                     .green {
-                        color: #16a34a;
+                        color: #4ade80;
                     }
 
                     .orange {
-                        color: #d97706;
+                        color: #fbbf24;
                     }
 
                     .red {
-                        color: #dc2626;
+                        color: #f87171;
                     }
 
                     .section {
-                        background: white;
+                        background: rgba(255, 255, 255, 0.1);
+                        backdrop-filter: blur(16px);
+                        -webkit-backdrop-filter: blur(16px);
+                        border: 1px solid rgba(255, 255, 255, 0.15);
                         padding: 25px;
-                        border-radius: 12px;
+                        border-radius: 16px;
                         margin-bottom: 25px;
-                        box-shadow:
-                            0 2px 8px rgba(0,0,0,0.08);
+                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+                        color: #f1f5f9;
                     }
 
                     .section h2 {
                         margin-bottom: 20px;
+                        color: #f8fafc;
                     }
 
                     .server {
@@ -168,8 +188,8 @@ public class JenkinsDockerDemoApplication {
                         justify-content: space-between;
                         align-items: center;
                         padding: 17px 0;
-                        border-bottom:
-                            1px solid #e5e7eb;
+                        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                        color: #e2e8f0;
                     }
 
                     .server:last-child {
@@ -180,18 +200,21 @@ public class JenkinsDockerDemoApplication {
                         padding: 6px 12px;
                         border-radius: 20px;
                         font-size: 12px;
-                        background: #dcfce7;
-                        color: #166534;
+                        background: rgba(34, 197, 94, 0.2);
+                        color: #4ade80;
+                        border: 1px solid rgba(34, 197, 94, 0.3);
                     }
 
                     .warning-badge {
-                        background: #fef3c7;
-                        color: #92400e;
+                        background: rgba(245, 158, 11, 0.2);
+                        color: #fbbf24;
+                        border: 1px solid rgba(245, 158, 11, 0.3);
                     }
 
                     .offline-badge {
-                        background: #fee2e2;
-                        color: #991b1b;
+                        background: rgba(239, 68, 68, 0.2);
+                        color: #f87171;
+                        border: 1px solid rgba(239, 68, 68, 0.3);
                     }
 
                     .progress-container {
@@ -203,11 +226,12 @@ public class JenkinsDockerDemoApplication {
                         justify-content: space-between;
                         margin-bottom: 7px;
                         font-size: 14px;
+                        color: #e2e8f0;
                     }
 
                     .progress {
                         height: 10px;
-                        background: #e5e7eb;
+                        background: rgba(255, 255, 255, 0.1);
                         border-radius: 10px;
                         overflow: hidden;
                     }
@@ -236,8 +260,8 @@ public class JenkinsDockerDemoApplication {
                         display: flex;
                         justify-content: space-between;
                         padding: 16px 0;
-                        border-bottom:
-                            1px solid #e5e7eb;
+                        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                        color: #e2e8f0;
                     }
 
                     .deployment:last-child {
@@ -245,18 +269,19 @@ public class JenkinsDockerDemoApplication {
                     }
 
                     .success {
-                        color: #16a34a;
+                        color: #4ade80;
                         font-weight: bold;
                     }
 
                     .log {
                         padding: 13px;
                         margin-bottom: 8px;
-                        background: #111827;
+                        background: rgba(17, 24, 39, 0.6);
                         color: #d1d5db;
                         border-radius: 6px;
                         font-family: monospace;
                         font-size: 13px;
+                        border: 1px solid rgba(255, 255, 255, 0.08);
                     }
 
                     .refresh-btn {
@@ -276,8 +301,7 @@ public class JenkinsDockerDemoApplication {
                     @media (max-width: 900px) {
 
                         .cards {
-                            grid-template-columns:
-                                repeat(2, 1fr);
+                            grid-template-columns: repeat(2, 1fr);
                         }
 
                         .sidebar {
