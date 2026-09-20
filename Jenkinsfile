@@ -22,6 +22,14 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    bat 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CloudOps-dashboard -Dsonar.projectName=CloudOps-dashboard'
+                }
+            }
+        }
+
         stage('Docker Build') {
             steps {
                 bat 'docker build -t jenkins-docker-demo .'
