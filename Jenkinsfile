@@ -28,5 +28,13 @@ pipeline {
             }
         }
 
+        stage('Docker Run') {
+            steps {
+                bat 'docker stop jenkins-demo 2>NUL || exit 0'
+                bat 'docker rm jenkins-demo 2>NUL || exit 0'
+                bat 'docker run -d --name jenkins-demo -p 8081:8080 jenkins-docker-demo'
+            }
+        }
+
     }
 }
